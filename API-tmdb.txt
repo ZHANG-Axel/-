@@ -1,0 +1,19 @@
+ $json = file_get_contents('https://geo.api.gouv.fr/communes?codePostal='.$location.'&fields=centre');
+        $jsonArr = json_decode($json);
+        if ($jsonArr==null) {
+            
+        } else {
+            
+                $latdossier = deg2rad ($jsonArr[0]->centre->coordinates[1]);
+                $londossier = deg2rad ($jsonArr[0]->centre->coordinates[0]);
+                $dossier['distance'] = 6378*acos(cos($latECAM)*cos($latdossier)*cos($londossier-$lonECAM)+sin($latECAM)*sin($latdossier));
+                $dossier['latitude'] = floatval($jsonArr[0]->centre->coordinates[1]);
+                $dossier['longitude'] = floatval($jsonArr[0]->centre->coordinates[0]);
+                addLog(LOGMAPQUEST,$dossier['idDossier'],$dossier['nom'],$location.";".$jsonArr[0]->centre->coordinates[1].";"
+                    .$jsonArr[0]->centre->coordinates[0].";".$jsonArr[0]->nom);
+                
+         
+        }
+
+
+Clé TMDB : 0d34be9b15e78c94a6d41f1872e62f86
